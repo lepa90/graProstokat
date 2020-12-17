@@ -7,3 +7,5 @@ class Settings:
         self.prostokat_height = 150
         self.prostokat_color = (60, 60, 60)
         self.prostokat_speed = 1.0
+        self.flet_direction = 1
+        self.flet_drop_speed = 10

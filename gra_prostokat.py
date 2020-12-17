@@ -15,23 +15,41 @@ class Gra_Prostokat:
         self.prostokat = Prostokat(self)
 
 
+
     def run_game(self):
         while True:
             self._check_events()
             self._update_screen()
-            self.prostokat.update()
+            self._update_prostokat()
+    def _update_prostokat(self):
+
+        self._check_flet_edges()
+        self.prostokat.update()
 
 
 
+
+    def _check_flet_edges(self):
+
+        if self.prostokat.rect1.top < 0 or self.prostokat.rect1.bottom > 800:
+            self._changes_fleet_direction()
+
+
+
+
+    def _changes_fleet_direction(self):
+
+        self.settings.flet_direction *= -1
 
     def _check_events(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 sys.exit()
     def _update_screen(self):
+
         self.screen.fill(self.settings.bg_color)
         self.ship.blitme()
-        self.prostokat.wys_prze()
+        self.prostokat.wys_pros()
         pygame.display.flip()
 
 if __name__ == '__main__':
