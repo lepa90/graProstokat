@@ -19,8 +19,10 @@ class Gra_Prostokat:
     def run_game(self):
         while True:
             self._check_events()
+            self.ship.update()
             self._update_screen()
             self._update_prostokat()
+
     def _update_prostokat(self):
 
         self._check_flet_edges()
@@ -34,21 +36,39 @@ class Gra_Prostokat:
         if self.prostokat.rect1.top < 0 or self.prostokat.rect1.bottom > 800:
             self._changes_fleet_direction()
 
+    def _check_events(self):
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                sys.exit()
+            elif event.type == pygame.KEYDOWN:
+               self._check_keydown_events(event)
+            elif event.type == pygame.KEYUP:
+              self._check_keyup_events(event)
+    def _check_keydown_events(self, event):
+        if event.key == pygame.K_RIGHT:
+            self.ship.moving_right = True
+        elif event.key == pygame.K_LEFT:
+            self.ship.moving_left = True
+        elif event.key == pygame.K_q:
+            sys.exit()
 
-
+    def _check_keyup_events(self, event):
+        if event.key == pygame.K_RIGHT:
+            self.ship.moving_right = False
+        elif event.key == pygame.K_LEFT:
+            self.ship.moving_left = False
 
     def _changes_fleet_direction(self):
 
         self.settings.flet_direction *= -1
 
-    def _check_events(self):
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                sys.exit()
+
     def _update_screen(self):
 
         self.screen.fill(self.settings.bg_color)
+
         self.ship.blitme()
+
         self.prostokat.wys_pros()
         pygame.display.flip()
 
